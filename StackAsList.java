@@ -1,3 +1,5 @@
+import java.util.EmptyStackException;
+
 /**
  * This class takes a Stack and converts it to a Linked List.
  * 
@@ -6,12 +8,115 @@
  * @version	21-06-03 
  */
 
+
 //Assignment 2
-public class StackAsList {
+public class StackAsList implements Stack{
 	
-	//TODO Class body
-	
-	//TODO methods maybe
-	
-	//TODO @Override toString()
+    Node first;
+    Node last;
+
+    class Node {
+        Object data;
+        Node next;
+        Node previous;
+
+        public Node(Object nodeData, Node next, Node previous) {
+            this.data = nodeData;
+            this.next = next;
+            this.previous = previous;
+
+        }
+
+        public boolean hasNext() {
+            if (this.next == null) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+    }
+
+    /**
+     * constructor for the stack
+     * if stack is supposed to be empty, argument should be null
+     * @param firstNode
+     */
+    public StackAsList(Node firstNode) {
+        this.first = firstNode;
+        this.last = firstNode;
+    }
+
+
+    @Override
+    public String push(String element) throws StackOverflowError {
+          try {
+              if (isEmpty()) {
+                  this.first = new Node(element, null, null);
+                  this.last = this.first;
+              } else {
+                  if (first.next == null) {
+                      this.last = new Node(element, null, null);
+                      this.first.next = this.last;
+                      this.last.previous = this.first;
+                  } else {
+                      Node oldLast = this.last;
+                      this.last = new Node(element, null, oldLast);
+                      oldLast.next = this.last;
+                  }
+              }
+              return element;
+          }
+          catch (Exception e){
+            System.out.println("The Stack is full!");
+            return null;
+        }
+    }
+
+    @Override
+    public String pop() throws EmptyStackException {
+        try {
+            Node popped = this.last;
+            this.last = popped.previous;
+            this.last.next = null;
+            return (String) popped.data;
+        }
+        catch (Exception e) {
+            System.out.println("The stack is already empty!");
+            return null;
+        }
+    }
+
+    @Override
+    public String peak() {
+        return (String) this.last.data;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        if (this.first == null)
+            return true;
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+
+        if (isEmpty()) {
+            return s;
+        }
+
+        Node current = this.first;
+
+        while (true) {
+            s = s + "[ " + current.data + " ] ";
+            if (current.next == null) {
+                break;
+            }
+            current = current.next;
+        }
+        return s;
+    }
 }
