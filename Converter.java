@@ -1,4 +1,13 @@
 
+/**
+ * This class takes an arithmetic expression as an input String
+ * and converts any infix notation to a postfix one.
+ * 
+ * @author	robinwettstaedt
+ * @author	n-code-r
+ * @version	21-06-03 
+ */
+
 //Assignment 5
 public class Converter {
 
