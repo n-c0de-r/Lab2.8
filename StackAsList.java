@@ -50,7 +50,7 @@ public class StackAsList implements Stack{
 
 
     @Override
-    public String push(String element) throws StackOverflowError {
+    public String push(String element) {
           try {
               if (isEmpty()) {
                   this.first = new Node(element, null, null);
@@ -75,8 +75,11 @@ public class StackAsList implements Stack{
     }
 
     @Override
-    public String pop() throws EmptyStackException {
+    public String pop() {
         try {
+            if (isEmpty()) {
+                throw new EmptyStackException;
+            }
             Node popped = this.last;
             this.last = popped.previous;
             this.last.next = null;
