@@ -28,33 +28,26 @@ public class Postfix {
 		
 		//While the array is not looped through
 		int i = 0;
-		while (i < pfx.length()) {
+		while (i < pfx.length()-1) {
 			first = pfx.substring(i,i+1);
+			
+			rhs = Integer.parseInt(s.pop());
+			lhs = Integer.parseInt(s.pop());
 			
 			switch (first) {
 				case "+":
-					rhs = Integer.parseInt(s.pop());
-					lhs = Integer.parseInt(s.pop());
 					r = lhs + rhs;
 					break;
 				case "-":
-					rhs = Integer.parseInt(s.pop());
-					lhs = Integer.parseInt(s.pop());
 					r = lhs - rhs;
 					break;
 				case "*":
-					rhs = Integer.parseInt(s.pop());
-					lhs = Integer.parseInt(s.pop());
 					r = lhs * rhs;
 					break;
 				case "/":
-					rhs = Integer.parseInt(s.pop());
-					lhs = Integer.parseInt(s.pop());
 					r = lhs / rhs;
 					break;
 				case "^":
-					rhs = Integer.parseInt(s.pop());
-					lhs = Integer.parseInt(s.pop());
 					r = (int) Math.pow(lhs,  rhs);
 					break;
 				default:
