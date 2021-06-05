@@ -36,7 +36,7 @@ public class Postfix {
 			first = pfx.substring(i,i+1);
 			
 			//If it is an operator, take the first two operands from the stack and calculate them accordingly
-			if (first == "+" || first == "-" || first == "*" || first == "/" || first == "^") {
+			if (first.equals("+") || first.equals("-") || first.equals("*") || first.equals("/") || first.equals("^")) {
 				//Store the operands in respective sides
 				rhs = Integer.parseInt(s.pop());
 				lhs = Integer.parseInt(s.pop());
