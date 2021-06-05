@@ -5,23 +5,27 @@ import java.util.EmptyStackException;
  * 
  * @author	robinwettstaedt
  * @author	n-c0de-r
- * @version	21-06-03 
+ * @version	21-06-03 update 21-06-06
  */
-
 
 //Assignment 2
 public class StackAsList implements Stack{
 	
-    Node first;
-    Node last;
-
+    private Node first;
+    //Node last; unnecessary
+    
+    public StackAsList() {
+    	//this(null);  unnecessary
+    }
+    
     class Node {
-        Object data;
+        String data;
         Node next;
-        Node previous;
+        //Node previous; unnecessary
 
-        public Node(Object nodeData, Node next, Node previous) {
-            this.data = nodeData;
+        //Constructor of the Node class
+        public Node(/*Object nodeData, Node next, Node previous*/) {
+            /*this.data = nodeData;
             this.next = next;
             this.previous = previous;
 
@@ -33,7 +37,7 @@ public class StackAsList implements Stack{
             }
             else {
                 return true;
-            }
+            }*/
         }
 
     }
@@ -43,15 +47,16 @@ public class StackAsList implements Stack{
      * if stack is supposed to be empty, argument should be null
      * @param firstNode
      */
-    public StackAsList(Node firstNode) {
+    /*public StackAsList(Node firstNode) {
         this.first = firstNode;
         this.last = firstNode;
-    }
+    }  unnecessary */
 
+ 
 
     @Override
-    public String push(String element) throws StackOverflowError {
-          try {
+    public String push(String element) /*throws StackOverflowError*/ {
+          /*try {
               if (isEmpty()) {
                   this.first = new Node(element, null, null);
                   this.last = this.first;
@@ -71,40 +76,52 @@ public class StackAsList implements Stack{
           catch (Exception e){
             System.out.println("The Stack is full!");
             return null;
-        }
+        }*/
+    	Node node = new Node();
+    	node.data = element;
+    	node.next = first;
+    	first 	  = node;
+    	return element;
     }
 
     @Override
-    public String pop() throws EmptyStackException {
+    public String pop() /*throws EmptyStackException*/ {
+    	if (first != null) {
+    		String s = first.data;
+    		first	 = first.next;
+    		return s;
+    	} else {
+    		return null;
+    	}
+    	/*	
         try {
-            Node popped = this.last;
-            this.last = popped.previous;
-            this.last.next = null;
+            Node popped = last;
+            last = popped.previous;
             return (String) popped.data;
         }
         catch (Exception e) {
             System.out.println("The stack is already empty!");
             return null;
-        }
+        }*/
     }
-
-    @Override
+    
+    /*
+	@Override
     public String peak() {
-        return (String) this.last.data;
+        return (String) first.data;
     }
-
+    
     @Override
     public boolean isEmpty() {
         if (this.first == null)
             return true;
         return false;
-    }
+    }*/
 
     @Override
     public String toString() {
-        String s = "";
 
-        if (isEmpty()) {
+        /*if (isEmpty()) {
             return s;
         }
 
@@ -116,7 +133,7 @@ public class StackAsList implements Stack{
                 break;
             }
             current = current.next;
-        }
-        return s;
+        }*/
+        return first.data;
     }
 }
