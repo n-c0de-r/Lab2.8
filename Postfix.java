@@ -1,7 +1,7 @@
 
 /**
- * This class takes a infix arithmetic expression as a
- * String and converts it to postfix notation.
+ * This class takes a infix arithmetic expression as a String
+ * and converts it to postfix notation or evaluates postifix notations.
  * 
  * @author	robinwettstaedt
  * @author	n-c0de-r
