@@ -13,14 +13,14 @@ class PostfixTest {
 	 */
 	@Test
 	void testLabExercisesAll() {
-		assertEquals(5, p.evaluate("12*3+"));
-		assertEquals(7, p.evaluate("123*+"));
-		assertEquals(-78, p.evaluate("12+34^-"));
-		assertEquals(-11, p.evaluate("12^34*-"));
-		assertEquals(-1011, p.evaluate("123*+45^-6+"));
-		assertNotEquals(9.25, p.evaluate("12+3*456-^+")); //negative tests for now as class can't
-		assertNotEquals(98.75, p.evaluate("12+34/+5+678+*+")); //  deal with doubles, needs fix!
-		assertEquals(-1, p.evaluate("91-2-32*-1-"));
+		assertEquals(5, p.evaluate("1 2 * 3 +"));
+		assertEquals(7, p.evaluate("1 2 3 * +"));
+		assertEquals(-78, p.evaluate("1 2 + 3 4 ^ -"));
+		assertEquals(-11, p.evaluate("1 2 ^ 3 4 * -"));
+		assertEquals(-1011, p.evaluate("1 2 3 * + 4 5 ^ - 6 +"));
+		assertNotEquals(9.25, p.evaluate("1 2 + 3 * 4 5 6 - ^ +")); //negative tests for now as class can't
+		assertNotEquals(98.75, p.evaluate("1 2 + 3 4 / + 5 + 6 7 8 + * +")); //  deal with doubles, needs fix!
+		assertEquals(-1, p.evaluate("9 1 - 2 - 3 2 * - 1 -"));
 	}
 
 	/*
@@ -28,43 +28,43 @@ class PostfixTest {
 	 */
 	@Test
 	void testLabExerciseA() {
-		assertEquals(5, p.evaluate("12*3+"));
+		assertEquals(5, p.evaluate("1 2 * 3 +"));
 	}
 
 	@Test
 	void testLabExerciseB() {
-		assertEquals(7, p.evaluate("123*+"));
+		assertEquals(7, p.evaluate("1 2 3 * +"));
 	}
 
 	@Test
 	void testLabExerciseC() {
-		assertEquals(-78, p.evaluate("12+34^-"));
+		assertEquals(-78, p.evaluate("1 2 + 3 4 ^ -"));
 	}
 
 	@Test
 	void testLabExerciseD() {
-		assertEquals(-11, p.evaluate("12^34*-"));
+		assertEquals(-11, p.evaluate("1 2 ^ 3 4 * -"));
 	}
 
 	@Test
 	void testLabExerciseE() {
-		assertEquals(-1011, p.evaluate("123*+45^-6+"));
+		assertEquals(-1011, p.evaluate("1 2 3 * + 4 5 ^ - 6 +"));
 
 	}
 
 	@Test
 	void testLabExerciseF() {
-		assertNotEquals(9.25, p.evaluate("12+3*456-^+"));
+		assertNotEquals(9.25, p.evaluate("1 2 + 3 * 4 5 6 - ^ +"));
 	}
 
 	@Test
 	void testLabExerciseG() {
-		assertNotEquals(98.75, p.evaluate("12+34/+5+678+*+"));
+		assertNotEquals(98.75, p.evaluate("1 2 + 3 4 / + 5 + 6 7 8 + * +"));
 	}
 
 	@Test
 	void testLabExerciseH() {
-		assertEquals(-1, p.evaluate("91-2-32*-1-"));
+		assertEquals(-1, p.evaluate("9 1 - 2 - 3 2 * - 1 -"));
 	}
 
 }
