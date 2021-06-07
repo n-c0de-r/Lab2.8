@@ -50,7 +50,7 @@ public class StackAsList implements Stack{
      */
     @Override
     public String pop() {
-    	if (first != null) {
+    	if (!isEmpty()) {
     		String s = first.data;
     		first	 = first.next;
     		return s;
@@ -65,7 +65,10 @@ public class StackAsList implements Stack{
      */
 	@Override
     public String peek() {
-        return first.data;
+		if (isEmpty())
+			return null;
+		else 
+			return first.data;
     }
     
 	/**
@@ -82,12 +85,12 @@ public class StackAsList implements Stack{
     //not sure why we would need this.
     @Override
     public String toString() {
-
-        /*if (isEmpty()) {
+	String s = "";
+        if (isEmpty()) {
             return s;
         }
 
-        Node current = this.first;
+        Node current = first;
 
         while (true) {
             s = s + "[ " + current.data + " ] ";
@@ -95,7 +98,7 @@ public class StackAsList implements Stack{
                 break;
             }
             current = current.next;
-        }*/
+        }
         return first.data;
     }
 }
