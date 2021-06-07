@@ -116,7 +116,6 @@ public class Postfix {
 				// t is right associative and top is of equal precedence)
 				while (!s.isEmpty() && !(s.peek().equals("(")) && prec(tokens[i]) <= prec(s.peek())) {
 					r = r + " " + s.pop();
-					s.push(tokens[i]);
 				}
 				s.push(tokens[i]); //otherwise push the opperator
 			} else  { // If t is an operand, r = r + t;
