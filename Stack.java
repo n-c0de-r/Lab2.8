@@ -1,15 +1,15 @@
 
 /**
- * This class recreates the behaviour of a Stack.
+ * This class recreates the behavior of a Stack.
  * 
  * @author	robinwettstaedt
- * @author	n-code-r
- * @version	21-06-03 
+ * @author	n-c0de-r
+ * @version	21-06-03 update 21-06-07
  */
 
 //Assignment 1
 public interface Stack {
-    abstract String push(String element);
+    abstract String	push(String element);
     abstract String pop();
     abstract String peek();
     abstract boolean isEmpty();

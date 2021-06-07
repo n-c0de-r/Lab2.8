@@ -1,75 +1,138 @@
 
 /**
- * This class takes a infix arithmetic expression as a
- * String and converts it to postfix notation.
+ * This class takes a infix arithmetic expression as a String and converts it to
+ * postfix notation or evaluates postifix notations.
  * 
- * @author	robinwettstaedt
- * @author	n-c0de-r
- * @version	21-06-03 
+ * @author robinwettstaedt
+ * @author n-c0de-r
+ * @version 21-06-03 update 21-06-06
  */
 
 //Assignment 3
 public class Postfix {
-	
-	//TODO Class body
-	
-	public int evaluate (String pfx) {
-		//variables holding left-hand side and right-hand side of an expression
-		int lhs;
-		int rhs;
-		
+
+	/**
+	 * Evaluate the value of an expression in Reverse Polish Notation/Postfix
+	 * 
+	 * @param pfx String containing the expression
+	 * @return Integer value of the given expression
+	 */
+	public int evaluate(String pfx) {
+		// variables holding left-hand side and right-hand side of an expression
+		int lhs = 0;
+		int rhs = 0;
+
 		Stack s = new StackAsList();
-		
-		//Variables to hold substrings
-		String first;
-		
-		//Variable holding the result
+
+		// Create an array of all tokens to check, instead of substrings
+		// in regard of assignment 6 to check multidigit expressions
+		String[] tokens = pfx.split("[\\s]"); // Split along any whitespaces
+
+		// Variable holding the result
 		int r = 0;
-		
-		//While the array is not looped through
+
+		// While the array is not looped through
 		int i = 0;
-		while (i < pfx.length()) {
-			first = pfx.substring(i,i+1);
-			
-			switch (first) {
+		while (i < tokens.length) {
+			// If it is an operator, take the first two
+			//operands from the stack and calculate them accordingly
+			if (tokens[i].equals("+") || tokens[i].equals("-") ||
+				tokens[i].equals("*") || tokens[i].equals("/") || tokens[i].equals("^")) {
+				// Store the operands in respective sides
+				rhs = Integer.parseInt(s.pop());
+				lhs = Integer.parseInt(s.pop());
+
+				// Do following calculations depending on found operator
+				switch (tokens[i]) {
 				case "+":
-					rhs = Integer.parseInt(s.pop());
-					lhs = Integer.parseInt(s.pop());
 					r = lhs + rhs;
 					break;
 				case "-":
-					rhs = Integer.parseInt(s.pop());
-					lhs = Integer.parseInt(s.pop());
 					r = lhs - rhs;
 					break;
 				case "*":
-					rhs = Integer.parseInt(s.pop());
-					lhs = Integer.parseInt(s.pop());
 					r = lhs * rhs;
 					break;
 				case "/":
-					rhs = Integer.parseInt(s.pop());
-					lhs = Integer.parseInt(s.pop());
 					r = lhs / rhs;
 					break;
 				case "^":
-					rhs = Integer.parseInt(s.pop());
-					lhs = Integer.parseInt(s.pop());
-					r = (int) Math.pow(lhs,  rhs);
+					r = (int) Math.pow(lhs, rhs);
 					break;
-				default:
-					s.push(first);
+				}
+				// Push the result to the stack
+				s.push(Integer.toString(r));
+			} else {
+				// If it's an operand push it on top of the stack
+				s.push(tokens[i]);
+			}
+			// When done with the current token, move on
+			i++;
+		}
+		// When finished return the resulting integer
+		return r;
+	}
+
+	/**
+	 * Convert any standard arithmetic expression from infix notation to Reverse
+	 * Polish Notation /Postfix
+	 * 
+	 * @param pfx String containing the expression to convert
+	 * @return String of the resulting postfix expression
+	 */
+	// Assignment 4
+	public String infixToPostfix(String ifx) {
+		// Almost like the former method, lots of copy-paste, similar comments removed
+		Stack s = new StackAsList();
+
+		String[] tokens = ifx.split("[\\s]");
+
+		String r = null;
+
+		int i = 0;
+		// Step by step implementation of given algorithm
+		// https://people.f4.htw-berlin.de/~weberwu/info2/Handouts/Postfix-evaluation.html
+		while (i < tokens.length) {
+
+			// if t is an open parenthesis
+			if (tokens[i].equals("(")) {
+				s.push(tokens[i]); // push it
+			}
+
+			// if t is an closing parenthesis
+			if (tokens[i].equals(")")) {
+				// while top <> opening parenthesis
+				String top = s.pop(); // get top of the stack to compare
+				while (!top.equals("(")) {
+					r = r + " " + top;
+					top = s.pop(); // get the next element to check, if it's "(" remove it
+				}
+			}
+
+			// If it is an operator
+			if (tokens[i].equals("+") || tokens[i].equals("-") ||
+				tokens[i].equals("*") || tokens[i].equals("/") || tokens[i].equals("^")) {
+
+				// while not (top is of lower precedence than t OR
+				//t is right associative and top is of equal precedence)
+				String top = s.pop(); // get top of the stack to compare
+
+				while (!top.equals("")) { // TODO precedence check
+					r = r + " " + top;
+					top = s.pop(); // get the next element to check
+				}
+				s.push(tokens[i]);
 			}
 			i++;
 		}
-		s.push(Integer.toString(r));
+
+		// while stack not empty
+		String top = s.pop();
+		while (top != null) {
+			r = r + " " + top;
+			top = s.pop();
+		}
 		return r;
 	}
-	
-	// Assignment 4
-//	public String infixToPostfix (String ifx){
-//		//TODO method body
-//		return "result";
-//	}
 
 }
