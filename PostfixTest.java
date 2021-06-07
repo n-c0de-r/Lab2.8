@@ -66,5 +66,17 @@ class PostfixTest {
 	void testLabExerciseH() {
 		assertEquals(-1, p.evaluate("9 1 - 2 - 3 2 * - 1 -"));
 	}
+	
+	@Test
+	void testConversion() {
+		assertEquals("1 2 * 3 +", p.infixToPostfix("1 * 2 + 3"));
+		assertEquals("1 2 3 * +", p.infixToPostfix("1 + 2 * 3"));
+		assertEquals("1 2 + 3 4 ^ -", p.infixToPostfix("1 + 2 - 3 ^ 4"));
+		assertEquals("1 2 ^ 3 4 * -", p.infixToPostfix("1 ^ 2 - 3 * 4"));
+		assertEquals("1 2 3 * + 4 5 ^ - 6 +", p.infixToPostfix("1 + 2 * 3 - 4 ^ 5 + 6"));
+		assertEquals("1 2 + 3 * 4 5 6 - ^ +", p.infixToPostfix("( 1 + 2 ) * 3 + ( 4 ^ ( 5 - 6 ) )"));
+		assertEquals("1 2 + 3 4 / + 5 + 6 7 8 + * +", p.infixToPostfix("1 + 2 + 3 / 4 + 5 + 6 * ( 7 + 8 )"));
+		assertEquals("9 1 - 2 - 3 2 * - 1 -", p.infixToPostfix("9 - 1 - 2 - 3 * 2 - 1"));
+	}
 
 }
