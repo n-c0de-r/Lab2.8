@@ -11,6 +11,6 @@
 public interface Stack {
     abstract String push(String element);
     abstract String pop();
-    abstract String peak();
+    abstract String peek();
     abstract boolean isEmpty();
 }

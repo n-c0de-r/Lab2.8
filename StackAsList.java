@@ -1,117 +1,95 @@
-import java.util.EmptyStackException;
 
 /**
  * This class takes a Stack and converts it to a Linked List.
- * 
+ *
  * @author	robinwettstaedt
  * @author	n-c0de-r
- * @version	21-06-03 
+ * @version	21-06-03 update 21-06-07
  */
-
 
 //Assignment 2
 public class StackAsList implements Stack{
-	
-    Node first;
-    Node last;
+
+    private Node first;
+
+    /**
+     * constructor for the stack as a linked list.
+     */
+    public StackAsList() {
+    }
 
     class Node {
-        Object data;
+        String data;
         Node next;
-        Node previous;
 
-        public Node(Object nodeData, Node next, Node previous) {
-            this.data = nodeData;
-            this.next = next;
-            this.previous = previous;
-
-        }
-
-        public boolean hasNext() {
-            if (this.next == null) {
-                return false;
-            }
-            else {
-                return true;
-            }
+        //Constructor of the Node class
+        public Node() {
         }
 
     }
 
     /**
-     * constructor for the stack
-     * if stack is supposed to be empty, argument should be null
-     * @param firstNode
+     * Insert an element in the beginning of the list,
+     * as the top-most element of a stack.
+     * @return The String just stored in the Node.
      */
-    public StackAsList(Node firstNode) {
-        this.first = firstNode;
-        this.last = firstNode;
-    }
-
-
     @Override
     public String push(String element) {
-          try {
-              if (isEmpty()) {
-                  this.first = new Node(element, null, null);
-                  this.last = this.first;
-              } else {
-                  if (first.next == null) {
-                      this.last = new Node(element, null, null);
-                      this.first.next = this.last;
-                      this.last.previous = this.first;
-                  } else {
-                      Node oldLast = this.last;
-                      this.last = new Node(element, null, oldLast);
-                      oldLast.next = this.last;
-                  }
-              }
-              return element;
-          }
-          catch (Exception e){
-            System.out.println("The Stack is full!");
-            return null;
-        }
+
+        Node node = new Node();
+        node.data = element;
+        node.next = first;
+        first 	  = node;
+        return element;
     }
 
+    /**
+     * Gets the first/ top-most element of the list,
+     * and removes it from the order and it's linking,
+     * @return String stored in the Node's data field.
+     */
     @Override
     public String pop() {
-        try {
-            if (isEmpty()) {
-                throw new EmptyStackException;
-            }
-            Node popped = this.last;
-            this.last = popped.previous;
-            this.last.next = null;
-            return (String) popped.data;
-        }
-        catch (Exception e) {
-            System.out.println("The stack is already empty!");
+        if (first != null) {
+            String s = first.data;
+            first	 = first.next;
+            return s;
+        } else {
             return null;
         }
     }
 
+    /**
+     * Just look into the data field of the top-most Node.
+     * * @return String stored in the Node's data field.
+     */
     @Override
-    public String peak() {
-        return (String) this.last.data;
+    public String peek() {
+        return first.data;
     }
 
+    /**
+     * Check if the list/stack is empty.
+     * @return Boolean, true if there are no Nodes in the list.
+     */
     @Override
     public boolean isEmpty() {
-        if (this.first == null)
+        if (first == null)
             return true;
         return false;
     }
 
+
     @Override
     public String toString() {
+
         String s = "";
 
         if (isEmpty()) {
             return s;
         }
 
-        Node current = this.first;
+        Node current = first;
 
         while (true) {
             s = s + "[ " + current.data + " ] ";
@@ -120,6 +98,6 @@ public class StackAsList implements Stack{
             }
             current = current.next;
         }
-        return s;
+        return first.data;
     }
 }
