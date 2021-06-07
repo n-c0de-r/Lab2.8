@@ -1,11 +1,11 @@
 
 /**
- * This class takes a infix arithmetic expression as a String and converts it to
- * postfix notation or evaluates postifix notations.
+ * This class takes a infix arithmetic expression as a String and converts
+ * it to postfix notation or evaluates postifix notations.
  * 
  * @author robinwettstaedt
  * @author n-c0de-r
- * @version 21-06-03 update 21-06-06
+ * @version 21-06-03 update 21-06-07
  */
 
 //Assignment 3
@@ -23,10 +23,10 @@ public class Postfix {
 		int rhs = 0;
 
 		Stack s = new StackAsList();
-
+		
 		// Create an array of all tokens to check, instead of substrings
 		// in regard of assignment 6 to check multidigit expressions
-		String[] tokens = pfx.split("[\\s]"); // Split along any whitespaces
+		String[] tokens = pfx.split("[\\s]");
 
 		// Variable holding the result
 		int r = 0;
@@ -54,7 +54,7 @@ public class Postfix {
 					r = lhs * rhs;
 					break;
 				case "/":
-					r = lhs / rhs;
+					r = (int) (1.0 * lhs / 1.0 * rhs);
 					break;
 				case "^":
 					r = (int) Math.pow(lhs, rhs);
@@ -74,8 +74,8 @@ public class Postfix {
 	}
 
 	/**
-	 * Convert any standard arithmetic expression from infix notation to Reverse
-	 * Polish Notation /Postfix
+	 * Convert any standard arithmetic expression from
+	 * infix notation to Reverse Polish Notation /Postfix
 	 * 
 	 * @param pfx String containing the expression to convert
 	 * @return String of the resulting postfix expression
@@ -87,7 +87,7 @@ public class Postfix {
 
 		String[] tokens = ifx.split("[\\s]");
 
-		String r = null;
+		String r = "";
 
 		int i = 0;
 		// Step by step implementation of given algorithm
@@ -100,39 +100,50 @@ public class Postfix {
 			}
 
 			// if t is an closing parenthesis
-			if (tokens[i].equals(")")) {
+			else if (tokens[i].equals(")")) {
 				// while top <> opening parenthesis
-				String top = s.pop(); // get top of the stack to compare
-				while (!top.equals("(")) {
-					r = r + " " + top;
-					top = s.pop(); // get the next element to check, if it's "(" remove it
+				while (!s.peek().equals("(")) {
+					r = r + " " + s.pop();
 				}
+				s.pop(); //if it's "(" remove it
 			}
 
 			// If it is an operator
-			if (tokens[i].equals("+") || tokens[i].equals("-") ||
+			else if (tokens[i].equals("+") || tokens[i].equals("-") ||
 				tokens[i].equals("*") || tokens[i].equals("/") || tokens[i].equals("^")) {
-
+				
 				// while not (top is of lower precedence than t OR
-				//t is right associative and top is of equal precedence)
-				String top = s.pop(); // get top of the stack to compare
-
-				while (!top.equals("")) { // TODO precedence check
-					r = r + " " + top;
-					top = s.pop(); // get the next element to check
+				// t is right associative and top is of equal precedence)
+				while (!s.isEmpty() && !(s.peek().equals("(")) && prec(tokens[i]) <= prec(s.peek())) {
+					r = r + " " + s.pop();
+					s.push(tokens[i]);
 				}
-				s.push(tokens[i]);
+				s.push(tokens[i]); //otherwise push the opperator
+			} else  { // If t is an operand, r = r + t;
+					r = r + " " + tokens[i];
 			}
 			i++;
 		}
 
 		// while stack not empty
-		String top = s.pop();
-		while (top != null) {
-			r = r + " " + top;
-			top = s.pop();
+		while (!s.isEmpty()) {
+			r = r + " " + s.pop();
 		}
 		return r;
 	}
-
+	
+	/**
+	 * Helper methods evaluates operator precedence
+	 * @param x	Sting holding the operator to check
+	 * @return	The value of precedence
+	 */
+	static int prec(String x) {  
+		if (x.equals("+") || x.equals("-"))  
+			return 1;  
+		if (x.equals("*") || x.equals("/"))  
+			return 2;
+		if (x.equals("^"))
+			return 3;
+		return 0;  
+	}  
 }
