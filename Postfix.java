@@ -77,7 +77,7 @@ public class Postfix {
 	 * Convert any standard arithmetic expression from
 	 * infix notation to Reverse Polish Notation /Postfix
 	 * 
-	 * @param pfx String containing the expression to convert
+	 * @param ifx String containing the expression to convert
 	 * @return String of the resulting postfix expression
 	 */
 	// Assignment 4
@@ -128,7 +128,7 @@ public class Postfix {
 		while (!s.isEmpty()) {
 			r = r + " " + s.pop();
 		}
-		return r;
+		return r.trim();
 	}
 	
 	/**
