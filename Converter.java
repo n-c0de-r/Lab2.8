@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 /**
  * This class takes an arithmetic expression as an input String
@@ -5,7 +6,7 @@
  * 
  * @author	robinwettstaedt
  * @author	n-c0de-r
- * @version	21-06-03 
+ * @version	21-06-03 updated 21-06-07
  */
 
 //Assignment 5
@@ -15,17 +16,31 @@ public class Converter {
 		//create a new postfix object, that provides means of evaluation and conversion
 		Postfix p = new Postfix();
 		
-		//System.out.println(p.evaluate("1 2 * 3 +")); checking if postfix works, obsolete with tests
+		boolean running = true;
 		
-		System.out.println("Please enter an infix expression.");
-		System.out.println("Each operand and operator must be separated by spaces!");
-		// Like in Chatterbox Lab
 		Scanner s = new Scanner(System.in);
-		System.out.println();
-		System.out.println("The resulting postfix notation is: " + p.infixToPostfix(s.nextLine().trim()));
-		System.out.println();
-		System.out.println("The result of the postfix expression equals to: " +  + p.evaluate(p.infixToPostfix(s.nextLine().trim())));
+		
+		// Similar to Chatterbox Lab
+		while (running) {
+			System.out.println("Each operand and operator must be separated by spaces!");
+			System.out.println("Type 'exit' to terminate.");
+			System.out.println();
+			System.out.print("Please enter an infix expression: ");
+			
+			String line = s.nextLine().trim();
+			
+			if (line.toLowerCase().equals("exit")) {
+				running = false;
+				System.out.println("");
+			} else {
+				String inToPost = p.infixToPostfix(line);
+				System.out.println();
+				System.out.println("The resulting postfix notation is: " + inToPost);
+				System.out.println();
+				System.out.println("The result of the postfix expression equals to: " +  + p.evaluate(inToPost));
+				System.out.println("");
+			}
+		}
 		s.close();
 	}
-
 }
