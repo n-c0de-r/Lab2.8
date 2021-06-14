@@ -64,7 +64,11 @@ public class Postfix {
 				s.push(Integer.toString(r));
 			} else {
 				// If it's an operand push it on top of the stack
-				s.push(tokens[i]);
+				if (tokens[i].matches("\\d")) { // If is a digit
+					s.push(tokens[i]); // just push it
+				} else { // If it's a latter A-F
+					s.push("" + Integer.parseInt(tokens[i], 16)); //convert Value and push as String
+				}
 			}
 			// When done with the current token, move on
 			i++;
